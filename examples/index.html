@@ -7,7 +7,7 @@
     <title>p5.textToLoops</title>
 
     <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
-    <script src="p5.textToLoops.js"></script>
+    <script src="p5.textToLoops.min.js"></script>
     <script>
         new p5(p => {
 
@@ -16,8 +16,8 @@
             p.preload = _ => { font = p.loadFont('assets/helvetica.ttf'); };
 
             p.setup = _ => {
-                let fntSz = 180;
-                let str = 'abode';
+                let fntSz = 250;
+                let str = 'p5.js';
 
                 p.createCanvas(600, 600);
                 p.pixelDensity(1);
@@ -33,14 +33,11 @@
                 p.textFont(font);
 
                 let bounds = font.textBounds(str, 0, 0);
-                p.translate(-bounds.w / 2, bounds.h / 2);
-
-                // p.stroke(100);
-                // p.rect(bounds.x, bounds.y, bounds.w, bounds.h);
+                p.translate(-bounds.w / 2, bounds.h / 2 - 50);
 
                 let loops = p.textToLoops(str, font, fntSz, {
                     simplifyThreshold: 0,
-                    sampleFactor: 0.75
+                    sampleFactor: 0.8
                 }).loops;
 
                 loops.forEach((loop, i) => {

@@ -6,7 +6,7 @@ module.exports = {
         contentBase: './examples/'
     },
     output: {
-        filename: 'p5.textToLoops.js'
+        filename: 'p5.textToLoops.min.js'
     },
     module: {
         rules: [{

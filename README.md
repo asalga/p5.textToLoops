@@ -5,27 +5,44 @@ Applies basic logic to textToPoints that allows more intelligent organization of
 
 ## Usage
 ```js
- new p5(p => {
-    let gfx, h2n;
+new p5(p => {
+
+    let font;
+
+    p.preload = _ => { font = p.loadFont('assets/helvetica.ttf'); };
 
     p.setup = _ => {
-        p.createCanvas(500, 500);
+        let fntSz = 250;
+        let str = 'p5.js';
+
+        p.createCanvas(600, 600);
+        p.pixelDensity(1);
         p.background(0);
 
-        let obj = textToLoops(ch);
-		let loops = obj.loops;
+        p.translate(p.width / 2, p.height / 2);
 
-        loops.forEach( _loop => {
+        p.colorMode(p.HSB);
+        p.noFill();
+        p.strokeWeight(3);
 
-            let scl = 1;
-            _loop.forEach( (l, i) => {
-                line(   _loop[i].x * scl, 
-                        _loop[i].y * scl, 
-                        _loop[i + 1].x * scl, 
-                        _loop[i + 1].y * scl);
-            });            
+        p.textSize(fntSz);
+        p.textFont(font);
+
+        let bounds = font.textBounds(str, 0, 0);
+        p.translate(-bounds.w / 2, bounds.h / 2 - 50);
+
+        let loops = p.textToLoops(str, font, fntSz, {
+            simplifyThreshold: 0,
+            sampleFactor: 0.8
+        }).loops;
+
+        loops.forEach((loop, i) => {
+            p.stroke((i / (loops.length - 1)) * 360, 100, 100);
+            p.beginShape();
+            loop.forEach(e => p.vertex(e.x, e.y));
+            p.endShape();
         });
-    }
+    };
 });
 ```
 
